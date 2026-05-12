@@ -10,34 +10,57 @@
     <style>
         /* --- ESTILOS BASE --- */
        /* --- ESTILOS BASE --- */
-        body {
-            margin: 0;
-            background-color: #efeeea;
-            font-family: 'Itim', cursive; 
-            color: #333;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            width: 100%;
-            font-size: 0.4rem;
+    /* 1. Reset básico */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #efeeea;
+    font-family: 'Itim', cursive;
+    overflow-x: hidden;
+}
 
+/* 2. El contenedor del fondo */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
     
-        }
+    background-image: url('fotofondo.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    
+    /* Evita que la imagen se vea borrosa al estirarse en monitores grandes */
+    image-rendering: auto; 
+    
+    /* Por defecto para móviles */
+    background-size: cover; 
+}
 
-        /* FIX PARA FONDO EN IPHONE / IOS */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-image: url('f3.png');
-            background-size: cover;
-            background-position: center;
-            /* En iOS, lo mejor es dejar que el sistema maneje el scroll natural */
-            background-attachment: scroll; 
-        }
+/* 3. Ajuste para PC (Pantallas horizontales) */
+@media (min-width: 1025px) {
+    body::before {
+        /* Si la imagen se ve "estirada" o "pixelada", cámbialo a 'contain' 
+           para que se vea la foto completa sin deformarse */
+        background-size: contain; 
+        
+        /* Opcional: Si usas 'contain', el color de fondo rellenará los lados */
+        background-color: #efeeea; 
+        
+        /* Añade un ligero desenfoque si la imagen es de poca resolución 
+           para que no se vean los píxeles "cuadrados" */
+        filter: blur(0px); 
+    }
+}
+
+/* 4. Fix para que el contenido sea legible */
+.content {
+    position: relative;
+    z-index: 1;
+}
 
         img {
             max-width: 100%;
